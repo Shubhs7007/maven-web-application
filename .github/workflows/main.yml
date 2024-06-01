@@ -1,21 +1,19 @@
-name: Release-Notes-Preview
+name: Workflow Notifications
 
 on:
-  pull_request:
-    branches: [ master ]
-  issue_comment:
-    types: [ edited ]
+  workflow_run:
+    workflows: [ "CI Build", "Production Deploy" ]
 
 jobs:
-  preview:
+  notifications:
+
     runs-on: ubuntu-latest
+
     steps:
     - uses: actions/checkout@v2
-    - run: |
-        git fetch --prune --unshallow --tags
-    - uses: snyk/release-notes-preview@v1.6.1
+    - uses: octogeeks/send-workflow-notifications@v1
       with:
-        releaseBranch: master
-      env:
-        GITHUB_PR_USERNAME: ${{ github.actor }}
-        GITHUB_TOKEN: ${{ secrets.TOKEN }}
+        smtp-server: smtp.gmail.com
+        smtp-user: your.email.sgajare285@gmail.com.com
+        smtp-password: ${{ secrets.SMTP_PASSWORD }}
+        configuration: ./.github/notifications.yml
