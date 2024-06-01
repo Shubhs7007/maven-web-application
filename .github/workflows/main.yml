@@ -1,16 +1,20 @@
-name: Publish
+name: Pull Request
+
 on:
-  push:
+  pull_request:
     branches:
       - master
-  workflow_dispatch:
 
 jobs:
-  bump-versions:
+  pull-request:
+    timeout-minutes: 30
     runs-on: ubuntu-latest
+
     steps:
-      - uses: alirezatheh/auto-bump-versions@v1
-        with:
-          github-token: ${{ secrets.TOKEN }}
-          new-version: 0.1.8
-          use-bumpver: true
+      - uses: actions/checkout@v2
+
+  generate-release-notes:
+    if: contains(github.event.pull_request.labels.*.name, 'release')
+    needs: pull-request
+    uses: ./.github/workflows/generate-release-note.yml
+    secrets: inherit
