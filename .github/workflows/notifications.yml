@@ -1,0 +1,12 @@
+workflows:
+- workflow: CI Build
+  notifications:
+  - email: homer.simpson@springfield.com
+    filter: [ failed ]
+
+- workflow: Production Deploy
+  notifications:
+  - email: mona@github.com
+    filter: [ requested, succeeded, failed ]
+  - email: rickandmorty@rickiverse.com
+    filter: [ failed ]
