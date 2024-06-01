@@ -6,7 +6,7 @@ workflows:
 
 - workflow: Production Deploy
   notifications:
-  - email: mona@github.com
+  - email: shubhamgajare92@gmiail.com
     filter: [ requested, succeeded, failed ]
   - email: shubhamgajare7007@gmail.com
     filter: [ failed ]
